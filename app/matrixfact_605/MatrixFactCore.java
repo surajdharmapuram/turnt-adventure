@@ -56,7 +56,7 @@ public class MatrixFactCore {
     	
     	for(int i = 0; i < K ; i++)
     	{
-    		update1.setUpdate(	i,2*learningRate*(colCache.getUnlocked(i)*eij - (lambda/ni)*rowCache.getUnlocked(i)));
+    		update1.setUpdate(i,2*learningRate*(colCache.getUnlocked(i)*eij - (lambda/ni)*rowCache.getUnlocked(i)));
     		update2.setUpdate(i,2*learningRate*(rowCache.getUnlocked(i)*eij - (lambda/mj)*colCache.getUnlocked(i)));
     	}
     	
