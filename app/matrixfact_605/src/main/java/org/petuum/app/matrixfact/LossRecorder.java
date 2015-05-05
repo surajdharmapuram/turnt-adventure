@@ -29,7 +29,7 @@ public class LossRecorder {
     // The index of a field is its column idx in lossTable.
     private ArrayList<String> fields = new ArrayList<String>();
     private int maxEval = 0;
-
+    int numRatings;
     // This needs to be called before PsTableGroup.createTableDone().
     public static void createLossTable() {
         TableConfig tableConfig = new TableConfig();
@@ -39,7 +39,8 @@ public class LossRecorder {
                 tableConfig);
     }
 
-    public LossRecorder() {
+    public LossRecorder(int numRatings) {
+	this.numRatings = numRatings;
         lossTable = PsTableGroup.getDoubleTableOrDie(kLossTableId);
     }
 
@@ -82,6 +83,11 @@ public class LossRecorder {
             DoubleRow lossRow = lossTable.get(i);
             for (int j = 0; j < numFields; ++j) {
                 double val = lossRow.get(j);
+		if(fields.get(j).equals("FullLoss"))
+		{
+			val /= numRatings;
+			val = Math.sqrt(val);
+		}
                 String formatVal = (val % 1 == 0) ? intFormat.format(val) :
                     doubleFormat.format(val);
                 stats += formatVal + " ";

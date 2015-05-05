@@ -50,7 +50,7 @@ public class MatrixFactWorker implements Runnable {
 
     private int staleness;    // only used for exp record, not algorithm.
 
-    private LossRecorder lossRecorder = new LossRecorder();
+    private LossRecorder lossRecorder;// = new LossRecorder();
 
     // Partition L and R table for initialization and L2 loss eval. This is
     // not necessarily good for partitioning ratings / entries.
@@ -93,7 +93,7 @@ public class MatrixFactWorker implements Runnable {
 
         assert config.ratings != null;
         this.ratings = config.ratings;
-
+	lossRecorder = new LossRecorder(ratings.size());
         this.LTableId = config.LTableId;
         this.RTableId = config.RTableId;
 
